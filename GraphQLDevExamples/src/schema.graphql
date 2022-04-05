@@ -1,0 +1,19 @@
+    type Query {
+        info: String!
+        membership: [Member!]!
+        memberByID(id: ID!): Member
+    }
+
+    type Mutation {
+        createMember(name: String!, region: String!, level: String!, orgType: String!, orgSize: String!): Member!
+        updateMember(id: ID!, name: String, region: String, level: String, orgType: String, orgSize: String): Member
+        deleteMember(id: ID!): Member
+    }
+    type Member {
+      id: ID!
+      name: String!
+      region: String!
+      level: String!
+      orgType: String!
+      orgSize: String!
+    }

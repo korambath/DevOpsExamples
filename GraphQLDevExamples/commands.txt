@@ -1,0 +1,30 @@
+npm init -y
+Wrote to /Users/ppk/Devops/GraphQLDev/cesmii-graphqljs/package.json:
+
+{
+  "name": "cesmii-graphqljs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+
+
+(base) ppk@Prakashans-iMac cesmii-graphqljs % npm install apollo-server graphql
+
+added 191 packages, and audited 192 packages in 4s
+
+26 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+start the server using the command below
+
+node src/index.js
+

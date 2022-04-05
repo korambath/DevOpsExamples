@@ -1,0 +1,64 @@
+
+
+query {
+  membership {
+    id
+    name
+    region
+    level
+    orgType
+    orgSize
+  }
+} #
+
+
+mutation {
+  createMember(
+    name: "General Mills"
+    region: "North"
+    level: "Platimum"
+    orgType: "Industry"
+    orgSize: "Large"
+  ) {
+    id
+  }
+}
+
+
+
+
+
+
+query {
+  memberByID(id: 1) {
+    id
+    name
+    region
+    level
+    orgType
+    orgSize
+  }
+}
+
+
+mutation {
+  updateMember(
+    id: 1
+    name: "name"
+    region: "unknown"
+    level: "unknown"
+    orgType: "uk"
+    orgSize: "uk"
+  ) {
+    id
+  }
+}
+
+
+mutation {
+  deleteMember(id: 2) {
+    id
+  }
+}
+
+
