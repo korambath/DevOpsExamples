@@ -1,0 +1,131 @@
+
+
+Reference: https://mosquitto.org/man/mosquitto-tls-7.html
+
+# Self Sigined Certificate
+
+tree
+.
+├── ca
+│   ├── ca.crt
+│   ├── ca.key
+│   └── ca.srl
+├── client
+│   ├── client.crt
+│   ├── client.csr
+│   └── client.key
+└── server
+    ├── server.crt
+    ├── server.csr
+    └── server.key
+
+
+# Append the content below to /etc/mosquitto/mosquitto.conf
+#cat /etc/mosquitto/mosquitto.conf 
+
+# commands below are added for TLS
+port 8883
+
+# certificate directory
+#/home/ppk/DevOps/MQTTDev/certs
+
+cafile /home/ppk/DevOps/MQTTDev/certs/ca/ca.crt
+
+# Path to the PEM encoded server certificate.
+certfile /home/ppk/DevOps/MQTTDev/certs/broker/broker.crt
+
+# Path to the PEM encoded keyfile.
+keyfile /home/ppk/DevOps/MQTTDev/certs/broker/broker.key
+
+
+mkdir certs
+cd certs
+mkdir ca
+cd ca/
+
+######### CA Certificate Creation ####################
+
+
+# The Common Name (CN) must not be the same as of clients or broker
+# In most cases CN must be the same as FQDN
+# openssl-genrsa, genrsa - generate an RSA private key, DES encryption
+
+openssl genrsa -des3 -out ca.key 2048
+
+#  Note down the password
+
+openssl req -new -x509 -days 3650 -key ca.key -out ca.crt
+
+# verify
+openssl x509 -in ca.crt -text -noout
+openssl rsa -in ca.key -check
+
+
+
+cd ..
+mkdir server
+cd server/
+
+########### Server Certificate Creation
+
+# create the keys and certificates of the broker:
+# generate a private key is generated (without a password):
+
+openssl genrsa -out server.key 2048
+
+hostname
+#ppk-VirtualBox
+
+openssl req -out server.csr -key server.key -new
+
+# Answer this question with FQDN (should not be the same as CA CN)
+Common Name (e.g. server FQDN or YOUR name) []: ppk-VirtualBox
+
+
+# verify
+openssl req -text -noout -verify -in server.csr
+
+
+openssl x509 -req -in server.csr -CA ../ca/ca.crt -CAkey ../ca/ca.key -CAcreateserial -out server.crt -days 3285
+
+# verify
+openssl x509 -in server.crt -text -noout
+
+sudo chown mosquitto:mosquitto server.key
+
+sudo systemctl stop mosquitto
+
+# Add the lines below to mosquitto.conf file and restart mosquitto
+sudo vi /etc/mosquitto/mosquitto.conf
+
+
+# commands below are added for TLS
+port 8883
+
+allow_anonymous true
+
+# certificate directory
+#/home/ppk/DevOps/MQTTDev/certs
+
+cafile /home/ppk/DevOps/MQTTDev/certs/ca/ca.crt
+
+# Path to the PEM encoded server certificate.
+certfile /home/ppk/DevOps/MQTTDev/certs/server/server.crt
+
+# Path to the PEM encoded keyfile.
+keyfile /home/ppk/DevOps/MQTTDev/certs/server/server.key
+
+###################################################
+
+sudo systemctl start mosquitto
+
+
+# Testing TLS  hostname must be the same as FQDN used for the server certificate CN
+
+mosquitto_pub -p 8883 --cafile ../ca/ca.crt  -h ppk-VirtualBox -m hello  -t 'test/topic'
+
+mosquitto_sub -h ppk-VirtualBox -t 'test/topic' -p 8883 --cafile ../ca/ca.crt
+hello
+
+
+# Commands for Client certificate is similar to the server except that CN is different.

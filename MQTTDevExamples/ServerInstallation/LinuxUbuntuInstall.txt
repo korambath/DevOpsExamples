@@ -1,0 +1,41 @@
+
+sudo apt-get update
+sudo apt-get upgrade
+
+
+sudo apt install mosquitto mosquitto-clients
+
+sudo apt-get install libmosquitto-dev
+
+sudo systemctl status mosquitto
+
+
+# Testing
+
+mosquitto_sub -h localhost -t 'test/topic' -v
+
+# on another terminal
+
+mosquitto_pub -h localhost -t 'test/topic' -m "Room Temperature: 26°C"
+
+
+# Adding username and password
+
+sudo vi /etc/mosquitto/conf.d/default.conf
+
+listener 1883 192.168.1.11   # To change the defautl port or IP address
+allow_anonymous false
+password_file /etc/mosquitto/passwd
+
+
+sudo mosquitto_passwd -c /etc/mosquitto/passwd ppk
+
+sudo systemctl restart mosquitto
+
+sudo systemctl status mosquitto
+
+
+mosquitto_sub 'test/topic' -v -u "ppk" -P "changeme" -h localhost
+
+mosquitto_pub -t 'test/topic' -m 'helloWorld' -u "ppk" -P "changeme" -h localhost
+
