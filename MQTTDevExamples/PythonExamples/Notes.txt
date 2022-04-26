@@ -1,0 +1,15 @@
+
+
+Call back function in MQTT acknowledges the event as a response
+
+
+on_connect          # Event connection MQTT client receives a CONNACK response from the MQTT server, 
+on_disconnect       # Event Disconnection
+on_subscribe        # Event Subscription  MQTT client receives a SUBACK response from the MQTT server
+on_unsubscribe      # Event Un-subscription
+on_publish          # Event Publish  MQTT client receives a PUBLISH message from the MQTT server. 
+on_message          # Event Message
+on_log              # Event Log information
+
+
+

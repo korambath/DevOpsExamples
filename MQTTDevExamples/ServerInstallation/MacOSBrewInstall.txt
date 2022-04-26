@@ -1,0 +1,13 @@
+
+# Execute the command below (Ref: https://brew.sh/). Requires sudo privelege.
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+
+Brew will be installed either on /opt/brew or /usr/local/Homebrew.  Depending on the 
+location expect either /opt/brew/bin or /usr/local/bin in the PATH environment variable
+
+Usually it updates $HOME/.zprofile file to add path 
+
+use "brew update" to make any updates
+
+

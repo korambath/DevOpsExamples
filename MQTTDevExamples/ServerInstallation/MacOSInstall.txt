@@ -1,0 +1,40 @@
+# The commands below are for installing on MacOS using brew
+# expect brew to be already available on the system
+# 
+
+1. brew install mosquitto
+
+mosquitto has been installed with a default configuration file.
+You can make changes to the configuration by editing:
+    /usr/local/etc/mosquitto/mosquitto.conf
+
+To restart mosquitto after an upgrade:
+  brew services restart mosquitto
+Or, if you don't want/need a background service you can just run:
+  /usr/local/opt/mosquitto/sbin/mosquitto -c /usr/local/etc/mosquitto/mosquitto.conf
+
+
+
+# Alternatively it may be installed at
+
+  /opt//homebrew/opt/mosquitto/sbin/mosquitto -c /opt/homebrw/etc/mosquitto/mosquitto.conf
+
+
+# use conda to install python paho-mqtt package
+
+2. conda install -c conda-forge paho-mqtt
+
+
+# Test Installation
+
+3. /usr/local/bin/mosquitto_sub -t topic/state
+
+# on another window
+
+4. /usr/local/bin/mosquitto_pub -t topic/state -m "Hello world"
+
+
+
+# brew services restart mosquitto
+# brew services stop mosquitto
+# brew services start mosquitto
