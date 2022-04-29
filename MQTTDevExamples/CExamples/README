@@ -1,0 +1,14 @@
+Expect mosquitto package already installed on your system
+
+Use the Makefile to compile both publisher and subscriber code
+
+They can also be compiled using the command below.
+
+gcc -o mqtt_pub mqtt_pub.c -lmosquitto
+
+
+When you run the publisher executable there will be a command prompt to 
+input a message. That will be received at the subscriber side if 
+it is running on another terminal.
+
+Simply press Enter to quit
