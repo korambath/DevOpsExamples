@@ -42,7 +42,7 @@ try:
             print(sub_node.get_browse_name().Name, sub_node.get_value())
             if ua.AccessLevel.CurrentWrite in sub_node.get_user_access_level():
                print(sub_node.get_user_access_level())
-               sub_node.set_value(True)
+               #sub_node.set_value(True)
         count+= 1
 
 # Continuously get the data CTRL C to stop
