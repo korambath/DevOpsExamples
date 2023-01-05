@@ -1,3 +1,4 @@
+Ref: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html
 
 aws ec2 describe-instances --output table --region us-west-1
 
@@ -36,4 +37,39 @@ aws iam list-groups-for-user --user-name susan  --output text --query "Groups[].
 
 
 aws ec2 describe-volumes --query 'Volumes[*]'
+
+aws ec2 create-key-pair --key-name MyKeyPair --query 'KeyMaterial' --output text > MyKeyPair.pem
+
+chmod 400 MyKeyPair.pem
+
+aws ec2 describe-key-pairs --key-name MyKeyPair
+
+aws ec2 delete-key-pair --key-name MyKeyPair
+
+aws ec2 create-security-group --group-name my-sg --description "My security group" --vpc-id vpc-1a2b3c4d
+
+aws ec2 describe-security-groups --group-ids sg-903004f8
+
+curl https://checkip.amazonaws.com   # It will print the public IP address of your laptop
+
+aws ec2 authorize-security-group-ingress --group-id sg-903004f8 --protocol tcp --port 3389 --cidr x.x.x.x
+
+aws ec2 authorize-security-group-ingress --group-id sg-903004f8 --protocol tcp --port 22 --cidr x.x.x.x
+
+aws ec2 describe-security-groups --group-ids sg-903004f8
+
+aws ec2 delete-security-group --group-id sg-903004f8
+
+aws ec2 run-instances --image-id ami-xxxxxxxx --count 1 --instance-type t2.micro --key-name MyKeyPair --security-group-ids sg-903004f8 --subnet-id subnet-6e7f829e
+
+aws ec2 create-tags --resources i-5203422c --tags Key=Name,Value=MyInstance
+
+aws ec2 describe-instances
+
+aws ec2 describe-instances --filters "Name=tag:Name,Values=MyInstance"
+
+aws ec2 describe-instances --filters "Name=image-id,Values=ami-x0123456,ami-y0123456,ami-z0123456"
+
+aws ec2 terminate-instances --instance-ids i-5203422c
+
 
